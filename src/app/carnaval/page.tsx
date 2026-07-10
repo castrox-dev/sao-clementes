@@ -12,9 +12,9 @@ const carnivalYears = [
 ];
 
 const infoLinks = [
-  { title: "Barracão", description: "Conheça o barracão onde a magia acontece", cta: "Agendar Visita" },
-  { title: "Ensaios", description: "Ensaios abertos toda quinta-feira na quadra", cta: "Ver Agenda" },
-  { title: "Fantasias", description: "Adquira sua fantasia oficial do Carnaval 2026", cta: "Comprar Agora" },
+  { title: "Barracão", description: "Conheça o barracão onde a magia acontece", cta: "Agendar Visita", href: "/contato" },
+  { title: "Ensaios", description: "Ensaios abertos toda quinta-feira na quadra", cta: "Ver Agenda", href: "/eventos" },
+  { title: "Fantasias", description: "Adquira sua fantasia oficial do Carnaval 2026", cta: "Comprar Agora", href: "/loja" },
 ];
 
 export default function CarnavalPage() {
@@ -112,7 +112,9 @@ export default function CarnavalPage() {
             >
               <h3 className="text-lg font-heading font-bold text-white mb-2">{item.title}</h3>
               <p className="text-sm text-gray-400 mb-4">{item.description}</p>
-              <Button variant="outline" size="sm">{item.cta}</Button>
+              <Link href={item.href}>
+                <Button variant="outline" size="sm">{item.cta}</Button>
+              </Link>
             </AnimatedSection>
           ))}
         </div>
