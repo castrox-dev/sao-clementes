@@ -13,13 +13,14 @@ interface TimeLeft {
   seconds: number;
 }
 
-function useCountdown(targetDate: Date): TimeLeft {
-  // Start with zeros on both server and client to avoid hydration mismatch
+const CARNIVAL_DATE = new Date("2026-02-28T21:00:00").getTime();
+
+function useCountdown(): TimeLeft {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
     function calc() {
-      const difference = targetDate.getTime() - Date.now();
+      const difference = CARNIVAL_DATE - Date.now();
       if (difference <= 0) {
         return { days: 0, hours: 0, minutes: 0, seconds: 0 };
       }
@@ -30,14 +31,12 @@ function useCountdown(targetDate: Date): TimeLeft {
         seconds: Math.floor((difference / 1000) % 60),
       };
     }
-    // Set initial value on client
     setTimeLeft(calc());
-    // Update every second
     const timer = setInterval(() => {
       setTimeLeft(calc());
     }, 1000);
     return () => clearInterval(timer);
-  }, [targetDate]);
+  }, []);
 
   return timeLeft;
 }
@@ -66,8 +65,7 @@ function TimeBlock({ value, label }: { value: number; label: string }) {
 }
 
 export function NextCarnival() {
-  const carnivalDate = new Date("2026-02-28T21:00:00");
-  const timeLeft = useCountdown(carnivalDate);
+  const timeLeft = useCountdown();
 
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => setIsLoaded(true), []);
