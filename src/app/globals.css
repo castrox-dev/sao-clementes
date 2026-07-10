@@ -1,26 +1,238 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-primary: #FFD400;
+  --color-primary-dark: #E6BF00;
+  --color-primary-light: #FFE44D;
+  --color-secondary: #FFD400;
+  --color-accent: #FFD400;
+  --color-dark: #0A0A0A;
+  --color-dark-100: #111111;
+  --color-dark-200: #1A1A1A;
+  --color-dark-300: #222222;
+  --color-dark-400: #2A2A2A;
+  --color-dark-500: #333333;
+  --color-dark-600: #444444;
+  --color-gray-100: #F5F5F5;
+  --color-gray-200: #E5E5E5;
+  --color-gray-300: #CCCCCC;
+  --color-gray-400: #999999;
+  --color-gray-500: #666666;
+  --color-gray-600: #444444;
+  --color-light: #FFFFFF;
+  --color-light-alpha: rgba(255, 255, 255, 0.1);
+  --color-light-alpha-20: rgba(255, 255, 255, 0.2);
+  --color-gold-gradient: linear-gradient(135deg, #FFD400, #FFAA00, #FFD400);
+  --font-sans: "Inter", "Montserrat", system-ui, -apple-system, sans-serif;
+  --font-heading: "Montserrat", "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --animate-fade-in: fade-in 0.6s ease-out;
+  --animate-fade-in-up: fade-in-up 0.6s ease-out;
+  --animate-fade-in-down: fade-in-down 0.6s ease-out;
+  --animate-slide-in-left: slide-in-left 0.6s ease-out;
+  --animate-slide-in-right: slide-in-right 0.6s ease-out;
+  --animate-glow: glow 2s ease-in-out infinite alternate;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-gold: pulse-gold 2s ease-in-out infinite;
+  --animate-scale-in: scale-in 0.4s ease-out;
+  --animate-ping-slow: ping-slow 4s ease-in-out infinite;
+  --animate-ping-slower: ping-slower 5s ease-in-out infinite;
+  --animate-ping-slowest: ping-slowest 6s ease-in-out infinite;
+  --animate-bounce-subtle: bounce-subtle 2s ease-in-out infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-down {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 10px rgba(255, 212, 0, 0.3), 0 0 20px rgba(255, 212, 0, 0.1); }
+  to { box-shadow: 0 0 20px rgba(255, 212, 0, 0.5), 0 0 40px rgba(255, 212, 0, 0.2); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse-gold {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ping-slow {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.05); opacity: 0.15; }
+}
+
+@keyframes ping-slower {
+  0%, 100% { transform: scale(1); opacity: 0.2; }
+  50% { transform: scale(1.08); opacity: 0.08; }
+}
+
+@keyframes ping-slowest {
+  0%, 100% { transform: scale(1); opacity: 0.1; }
+  50% { transform: scale(1.1); opacity: 0.03; }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #FFD400 #1A1A1A;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #1A1A1A;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #FFD400;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #E6BF00;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  background-color: #0A0A0A;
+  color: #FFFFFF;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: rgba(255, 212, 0, 0.3);
+  color: #FFFFFF;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #FFD400 0%, #FFAA00 50%, #FFD400 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gold-border {
+  border-image: linear-gradient(135deg, #FFD400, #FFAA00) 1;
+}
+
+.gold-shadow {
+  box-shadow: 0 0 20px rgba(255, 212, 0, 0.15), 0 0 40px rgba(255, 212, 0, 0.05);
+}
+
+.gold-glow {
+  box-shadow: 0 0 30px rgba(255, 212, 0, 0.3), 0 0 60px rgba(255, 212, 0, 0.1);
+}
+
+.text-shadow {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+}
+
+.bg-grid {
+  background-image: 
+    linear-gradient(rgba(255, 212, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 212, 0, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.bg-noise {
+  position: relative;
+}
+
+.bg-noise::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 100;
+}
+
+.parallax-container {
+  perspective: 1px;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.parallax-layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.parallax-layer-back {
+  transform: translateZ(-1px) scale(2);
+}
+
+.parallax-layer-front {
+  transform: translateZ(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
