@@ -14,27 +14,30 @@ interface TimeLeft {
 }
 
 function useCountdown(targetDate: Date): TimeLeft {
-  const calculateTimeLeft = useCallback(() => {
-    const difference = targetDate.getTime() - new Date().getTime();
-    if (difference <= 0) {
-      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-    }
-    return {
-      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((difference / (1000 * 60)) % 60),
-      seconds: Math.floor((difference / 1000) % 60),
-    };
-  }, [targetDate]);
-
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateTimeLeft);
+  // Start with zeros on both server and client to avoid hydration mismatch
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
+    function calc() {
+      const difference = targetDate.getTime() - Date.now();
+      if (difference <= 0) {
+        return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+      }
+      return {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / (1000 * 60)) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    }
+    // Set initial value on client
+    setTimeLeft(calc());
+    // Update every second
     const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
+      setTimeLeft(calc());
     }, 1000);
     return () => clearInterval(timer);
-  }, [calculateTimeLeft]);
+  }, [targetDate]);
 
   return timeLeft;
 }
