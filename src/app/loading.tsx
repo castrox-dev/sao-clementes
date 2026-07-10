@@ -1,7 +1,5 @@
 "use client";
 
-"use client";
-
 import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -23,7 +21,7 @@ export default function Loading() {
             <span className="text-primary font-black text-2xl font-heading">SC</span>
           ) : (
             <Image
-              src="/Logo.png"
+              src="/logo.png"
               alt="GRES São Clemente"
               width={80}
               height={80}
